@@ -1,4 +1,5 @@
 import express from "express";
+import "express-async-errors";
 import { json } from "body-parser";
 
 import { currentUserRouter } from "./routes/current-user";
@@ -17,7 +18,7 @@ app.use(signoutRouter);
 app.use(signupRouter);
 
 //catch all  lost directories
-app.all("*", () => {
+app.all("*", async () => {
     throw new NotFoundedError();
 })
 
