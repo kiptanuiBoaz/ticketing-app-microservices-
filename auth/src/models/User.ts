@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Password } from "../services/password";
 
 //an interface that describes the propterties required  to create a n ew user
 interface UserAttrs {
@@ -27,6 +28,18 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 
+});
+
+//middleare to run before saving  user entry
+userSchema.pre("save", async function (done) {
+    if (this.isModified("password")) {
+        // hashing the passowd using external class 
+        const hashed = await Password.toHash(this.get("password"));
+        this.set("password", hashed);
+    }
+
+    //asynchronous work dones
+    done();
 });
 
 
