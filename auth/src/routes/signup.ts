@@ -1,61 +1,59 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "../errors/Request-validation-error";
-import { DatabaseConnectionError } from "../errors/Database-connection-error";
+import { body } from "express-validator";
 import { User } from "../models/User";
 import { BadRequestError } from "../errors/bad-request-error";
+import { validateRequest } from "../middlewares/validate-request";
 import jwt from "jsonwebtoken"
 
 const router = express.Router();
 
-router.post("/api/users/signup", [
+router.post("/api/users/signup",
+    [
 
-    //validation withlibrary
-    body("email")
-        .isEmail()
-        .withMessage("Email must be valid"),
+        //validation withlibrary
+        body("email")
+            .isEmail()
+            .withMessage("Email must be valid"),
 
-    body("password")
-        .trim()
-        .isLength({ min: 4, max: 20 })
-        .withMessage("Password must be between 4 and 20 characters")
+        body("password")
+            .trim()
+            .isLength({ min: 4, max: 20 })
+            .withMessage("Password must be between 4 and 20 characters")
 
-], async (req: Request, res: Response) => {
-    //getting access to the validation errors
-    const errors = validationResult(req);
+    ],
+    validateRequest,
+    async (req: Request, res: Response) => {
 
-    if (!errors.isEmpty()) {
-        throw new RequestValidationError(errors.array());
-    }
-    const { email, password } = req.body;
 
-    const existingUser = await User.findOne({ email });
+        const { email, password } = req.body;
 
-    //email duplication error
-    if (existingUser) {
-        console.log(`User ${existingUser.email} is already in use`);
-        throw new BadRequestError("Email already in use");
-    }
+        const existingUser = await User.findOne({ email });
 
-    const user = User.build({ email, password });
-    await user.save();
+        //email duplication error
+        if (existingUser) {
+            console.log(`User ${existingUser.email} is already in use`);
+            throw new BadRequestError("Email already in use");
+        }
 
-    // Generate JWT
+        const user = User.build({ email, password });
+        await user.save();
 
-    const userJwt = jwt.sign(
-        {
-            id: user.id,
-            email: user.email
-        },
-        process.env.JWT_KEY!
-    );
+        // Generate JWT
 
-    //Store on a session object
-    req.session = {
-        jwt: userJwt
-    };
+        const userJwt = jwt.sign(
+            {
+                id: user.id,
+                email: user.email
+            },
+            process.env.JWT_KEY!
+        );
 
-    res.status(201).send(user);
-});
+        //Store on a session object
+        req.session = {
+            jwt: userJwt
+        };
+
+        res.status(201).send(user);
+    });
 
 export { router as signupRouter };
