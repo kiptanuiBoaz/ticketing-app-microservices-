@@ -31,7 +31,6 @@ router.post("/api/users/signin",
         };
 
         // Generate JWT
-
         const userJwt = jwt.sign(
             {
                 id: existingUser.id,
