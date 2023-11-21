@@ -4,7 +4,6 @@ import { CustomError } from "../errors/Custom-error";
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
 
     if (err instanceof CustomError) {
-
         return res.status(err.statusCode).send({ errors: err.serializeErrors() });
     }
 

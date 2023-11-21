@@ -6,13 +6,15 @@ import { app } from "../app";
 let mongo: any;
 
 beforeAll(async () => {
-    // connect to mongo memory before running any test
+    // connect to mongo memory before running any 
+
+    process.env.JWT_KEY = "afajfa"
     mongo = await MongoMemoryServer.create();
     const mongoUri = mongo.getUri();
 
     await mongoose.connect(mongoUri, {});
 
-})
+});
 
 
 beforeEach(async () => {
@@ -26,6 +28,5 @@ afterAll(async () => {
     if (mongo) {
         await mongo.stop();
     }
-    await mongo.stop();
     await mongoose.connection.close();
-})
+});

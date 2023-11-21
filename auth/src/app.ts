@@ -19,7 +19,7 @@ app.use(json());
 //cookie management middleware
 app.use(cookieSession({
     signed: false,
-    secure: true,//musbe be http
+    secure: process.env.NODE_ENV !== "test",//musbe be http
 }))
 
 //auth routes
