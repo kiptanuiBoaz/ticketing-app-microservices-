@@ -68,7 +68,7 @@ it("disallows duplicate email", async () => {
         .expect(400)
 });
 
-it("sets a cookie after successful signuup", async () => {
+it("sets a cookie after successful signup", async () => {
     const response = await request(app)
         .post("/api/users/signup")
         .send({
@@ -77,5 +77,6 @@ it("sets a cookie after successful signuup", async () => {
         })
         .expect(201);
 
+    //check headers
     expect(response.get("Set-Cookie")).toBeDefined();
 })
