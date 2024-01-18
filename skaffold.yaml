@@ -15,3 +15,11 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: kiptanuiboaz/client
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
