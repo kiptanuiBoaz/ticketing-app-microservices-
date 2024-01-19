@@ -33,7 +33,9 @@ const LandingPage = ({ currentUser, tickets }) => {
 
 //fetch tickets when user navigates to the landing page
 LandingPage.getInitialProps = async (context, client, currentUser) => {
-  const { data } = await client.get("/api/tickets");
+  const { data } = await client
+    .get("/api/tickets")
+    .catch(err => console.log(err.message));
 
   return { tickets: data };
 };
