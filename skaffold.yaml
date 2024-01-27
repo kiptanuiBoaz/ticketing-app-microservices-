@@ -16,10 +16,18 @@ build:
           - src: "src/**/*.ts"
             dest: .
     - image: kiptanuiboaz/client
-      context: auth
+      context: client
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: "**/*.js"
+            dest: .
+    - image: kiptanuiboaz/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
             dest: .
