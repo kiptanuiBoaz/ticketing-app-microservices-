@@ -103,11 +103,12 @@
     // "allowUnreachableCode": true,                     /* Disable error reporting for unreachable code. */
 
     /* Completeness */
-    // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  },
-  "include": [
-    "src/**/*.ts",   // Adjust this path based on your project structure
-    "./global.d.ts"
-  ]
+    // "skipDefaultLibCheck": true,      
+               /* Skip type checking .d.ts files that are included with TypeScript. */
+    "skipLibCheck": true    ,
+    "baseUrl": "./",    
+    "paths": {
+      "@ak-tickets-reuse/common": ["node_modules/@gittixteam/common"]
+    }                             /* Skip type checking all .d.ts files. */
+  }
 }

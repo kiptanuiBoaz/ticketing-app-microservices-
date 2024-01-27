@@ -1,59 +1,52 @@
-import express, { Request, Response } from "express";
-import { body } from "express-validator";
-import { User } from "../models/User";
-import { BadRequestError } from "../errors/bad-request-error";
-import { validateRequest } from "../middlewares/validate-request";
-import jwt from "jsonwebtoken"
+import express, { Request, Response } from 'express';
+import { body } from 'express-validator';
+import jwt from 'jsonwebtoken';
+
+import { User } from '../models/user';
+import { BadRequestError, validateRequest } from '@gittixteam/common';
 
 const router = express.Router();
 
-router.post("/api/users/signup",
-    [
+router.post(
+  '/api/users/signup',
+  [
+    body('email')
+      .isEmail()
+      .withMessage('Email must be valid'),
+    body('password')
+      .trim()
+      .isLength({ min: 4, max: 20 })
+      .withMessage('Password must be between 4 and 20 characters')
+  ],
+  validateRequest,
+  async (req: Request, res: Response) => {
+    const { email, password } = req.body;
 
-        //validation withlibrary
-        body("email")
-            .isEmail()
-            .withMessage("Email must be valid"),
+    const existingUser = await User.findOne({ email });
 
-        body("password")
-            .trim()
-            .isLength({ min: 4, max: 20 })
-            .withMessage("Password must be between 4 and 20 characters")
+    if (existingUser) {
+      throw new BadRequestError('Email in use');
+    }
 
-    ],
-    validateRequest,
-    async (req: Request, res: Response) => {
+    const user = User.build({ email, password });
+    await user.save();
 
+    // Generate JWT
+    const userJwt = jwt.sign(
+      {
+        id: user.id,
+        email: user.email
+      },
+      process.env.JWT_KEY!
+    );
 
-        const { email, password } = req.body;
+    // Store it on session object
+    req.session = {
+      jwt: userJwt
+    };
 
-        const existingUser = await User.findOne({ email });
-
-        //email duplication error
-        if (existingUser) {
-            console.log(`User ${existingUser.email} is already in use`);
-            throw new BadRequestError("Email already in use");
-        }
-
-        const user = User.build({ email, password });
-        await user.save();
-
-        // Generate JWT
-
-        const userJwt = jwt.sign(
-            {
-                id: user.id,
-                email: user.email
-            },
-            process.env.JWT_KEY!
-        );
-
-        //Store on a session object
-        req.session = {
-            jwt: userJwt
-        };
-
-        res.status(201).send(user);
-    });
+    res.status(201).send(user);
+  }
+);
 
 export { router as signupRouter };

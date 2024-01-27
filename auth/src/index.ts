@@ -1,28 +1,23 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-import { app } from "./app";
-
+import { app } from './app';
 
 const start = async () => {
-    if (!process.env.JWT_KEY) {
-        throw new Error("JWT_KEY is must be defined");
-    };
+  // if (!process.env.JWT_KEY) {
+  //   throw new Error('JWT_KEY must be defined');
+  // }
 
-    try {
-        //db connection   
-        await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
-        console.log("Connected to MongoDB")
-    } catch (error: any) {
-        console.error(error.message);
-    }
+  try {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
 
-    //listent for traffic
-    app.listen(3000, () => {
-        console.log("Auth server listening on port 3000!!");
-    })
+    console.log('Connected to MongoDb');
+  } catch (err) {
+    console.error(err);
+  }
 
-}
+  app.listen(3000, () => {
+    console.log('Listening on port 3000!!!!!!!!');
+  });
+};
 
 start();
-
-

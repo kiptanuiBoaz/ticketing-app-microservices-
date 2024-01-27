@@ -1,50 +1,51 @@
-import { MongoMemoryServer } from "mongodb-memory-server";
-import mongoose from "mongoose";
-import request from "supertest";
-import { app } from "../app";
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from 'mongoose';
+import request from 'supertest';
+import { app } from '../app';
 
 declare global {
-    var getAuthCookie: () => Promise<string[]>;
+  var signin: () => Promise<string[]>;
 }
 
-//to run before all the tests -- set up a mondoDB instance
 let mongo: any;
 beforeAll(async () => {
-    process.env.JWT_KEY = "asdgfjkl";
-    mongo = await MongoMemoryServer.create();
-    const mongoUri = mongo.getUri();
+  process.env.JWT_KEY = 'asdfasdf';
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-    await mongoose.connect(mongoUri);
+  const mongo = await MongoMemoryServer.create();
+  const mongoUri = mongo.getUri();
+
+  await mongoose.connect(mongoUri, {});
 });
 
-//to run before each test -- clear collections
 beforeEach(async () => {
-    const collections = await mongoose.connection.db.collections();
+  const collections = await mongoose.connection.db.collections();
 
-    for (let collection of collections) {
-        await collection.deleteMany();
-    }
+  for (let collection of collections) {
+    await collection.deleteMany({});
+  }
 });
 
-//to run after all tests -- stop thr mongoDB istance
 afterAll(async () => {
-    if (mongo) {
-        await mongo.stop();
-    }
-    await mongoose.connection.close();
+  if (mongo) {
+    await mongo.stop();
+  }
+  await mongoose.connection.close();
 });
 
-//declares a global function accecible to all test cases
-global.getAuthCookie = async () => {
-    const email = "test@test.com";
-    const password = "password";
+global.signin = async () => {
+  const email = 'test@test.com';
+  const password = 'password';
 
-    const response = await request(app)
-        .post("/api/users/signup")
-        .send({ email, password })
-        .expect(201);
+  const response = await request(app)
+    .post('/api/users/signup')
+    .send({
+      email,
+      password,
+    })
+    .expect(201);
 
-    const cookie = response.get("Set-Cookie");
+  const cookie = response.get('Set-Cookie');
 
-    return cookie;
+  return cookie;
 };
