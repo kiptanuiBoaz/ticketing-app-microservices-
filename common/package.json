@@ -1,9 +1,9 @@
 {
-  "name": "@gittix/common",
-  "version": "1.0.1",
+  "name": "@gittixteam/common",
+  "version": "1.0.2",
   "description": "",
   "main": "./build/index.js",
-  "types": "./build/index.t.ts",
+  "types": "./build/index.d.ts",
   "files": [
     "build/**/*"
   ],
