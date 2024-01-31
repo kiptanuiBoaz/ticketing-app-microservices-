@@ -1,5 +1,5 @@
 import nats from "node-nats-streaming";
-import { TiketCreatedPublisher } from "./events/ticket-created-publisher";
+import { TicketCreatedPublisher } from "./events/ticket-created-publisher";
 
 //clear the console
 console.clear();
@@ -12,7 +12,7 @@ const stan = nats.connect("ticketing", "abc", {
 stan.on("connect", async () => {
     console.log("Publisher connecteed to NATS");
 
-    const Publisher = new TiketCreatedPublisher(stan);
+    const Publisher = new TicketCreatedPublisher(stan);
     try {
         await Publisher.publish({
             id: "123",

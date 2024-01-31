@@ -1,4 +1,4 @@
-import nats from "node-nats-streaming";
+import nats, { Stan } from "node-nats-streaming";
 import { randomBytes } from "crypto";
 import { TicketCreatedListner } from "./events/ticket-created-listener";
 
@@ -28,3 +28,10 @@ stan.on("connect", () => {
 //intercept interupt signals to our program
 process.on("SIGINT", () => stan.close());
 process.on("SIGTERM", () => stan.close());
+
+abstract class Listener {
+    private client: Stan;
+    constructor(client: Stan) {
+        this.client = client;
+    }
+}
