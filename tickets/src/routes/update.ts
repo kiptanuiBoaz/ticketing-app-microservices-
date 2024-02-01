@@ -7,9 +7,9 @@ import {
     NotAuthorizedError,
     BadRequestError,
 } from "@ak-tickets-reuse/common";
-import { Ticket } from "../models/ticket";
-import { TicketUpdatedPublisher } from "./../events/publishers/ticket-updated";
 import { natsWrapper } from "../nats-wrapper";
+import { Ticket } from "src/models/ticket";
+import { TicketUpdatedPublisher } from "src/events/publishers/ticket-updated-publisher";
 
 const router = express.Router();
 
