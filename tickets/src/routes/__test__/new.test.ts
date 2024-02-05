@@ -14,7 +14,7 @@ it("can only be accessed if the user is signed in", async () => {
 });
 
 it("returns a status other than 401 if the user is signed in", async () => {
-    const cookie = await global.signin();
+    const cookie = await global.getAuthCookie();
     const response = await request(app)
         .post("/api/tickets")
         .set("Cookie", cookie)
@@ -24,7 +24,7 @@ it("returns a status other than 401 if the user is signed in", async () => {
 });
 
 it("returns an error if an invalid title is provided", async () => {
-    const cookie = await global.signin();
+    const cookie = await global.getAuthCookie();
     await request(app)
         .post("/api/tickets")
         .set("Cookie", cookie)
@@ -43,7 +43,7 @@ it("returns an error if an invalid title is provided", async () => {
         .expect(400);
 });
 it("returns an error of an invalid price is provided", async () => {
-    const cookie = await global.signin();
+    const cookie = await global.getAuthCookie();
     await request(app)
         .post("/api/tickets")
         .set("Cookie", cookie)
@@ -63,7 +63,7 @@ it("returns an error of an invalid price is provided", async () => {
 });
 
 it("creates a ticket with valid inputs", async () => {
-    const cookie = await global.signin();
+    const cookie = await global.getAuthCookie();
     let tickets = await Ticket.find({});
     expect(tickets.length).toEqual(0);
 
@@ -85,7 +85,7 @@ it("creates a ticket with valid inputs", async () => {
 });
 
 it("publishes an event", async () => {
-    const cookie = await global.signin();
+    const cookie = await global.getAuthCookie();
     const title = "asdfg";
 
     await request(app)
