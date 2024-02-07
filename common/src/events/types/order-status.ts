@@ -8,6 +8,7 @@ export enum OrderStatus {
      * been reserved, or when the user has cancelled the order
      * or the order expires before payment
      */
+
     Cancelled = "cancelled",
 
     //The order has succesfully reserved the ticket
