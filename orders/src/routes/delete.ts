@@ -7,7 +7,7 @@ import {
   OrderStatus,
   requireAuth,
 } from "@ak-tickets-reuse/common";
-import { OrderCancelledPublisher } from "./../events/publishers/order-cancelled-event";
+import { OrderCancelledPublisher } from "src/events/publishers/order-cancelled-publisher";
 
 const router = express.Router();
 
