@@ -53,7 +53,7 @@ const ticketSchema = new mongoose.Schema(
     }
 );
 
-ticketSchema.set("versionKey", "version");
+ticketSchema.set("versionKey", "version");//rename __v key 
 ticketSchema.plugin(updateIfCurrentPlugin); //track versioning
 
 //allows TS to do some type checking on the properties we are using to create a new record
