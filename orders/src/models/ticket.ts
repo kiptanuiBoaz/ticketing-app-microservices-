@@ -46,7 +46,7 @@ const ticketSchema = new mongoose.Schema(
 );
 
 //updates a record if the current version number is less 1 the incoming version number
-ticketSchema.set("versionKey", "version");
+ticketSchema.set("versionKey", "version"); // rename the __v key
 ticketSchema.plugin(updateIfCurrentPlugin); //auto implementation
 
 //MANUAL IMPLEMENTATION
