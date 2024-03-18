@@ -23,6 +23,7 @@ router.delete(
       throw new NotFoundError();
     }
 
+
     if (order.userID !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
@@ -45,3 +46,4 @@ router.delete(
 );
 
 export { router as deleteOrderRouter };
+
