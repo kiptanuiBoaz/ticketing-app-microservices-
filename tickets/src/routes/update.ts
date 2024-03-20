@@ -6,7 +6,7 @@ import {
     requireAuth,
     NotAuthorizedError,
     BadRequestError,
-} from "@ak-tickets-reuse/common";
+} from "@gittixteam/common";
 import { natsWrapper } from "../nats-wrapper";
 import { Ticket } from "src/models/ticket";
 import { TicketUpdatedPublisher } from "src/events/publishers/ticket-updated-publisher";

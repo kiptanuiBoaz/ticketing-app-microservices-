@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { NotFoundError } from "@ak-tickets-reuse/common";
+import { NotFoundError } from "@gittixteam/common";
 import { Ticket } from "../models/ticket";
 
 const router = express.Router();
