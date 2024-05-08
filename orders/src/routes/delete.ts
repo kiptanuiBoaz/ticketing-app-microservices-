@@ -6,7 +6,7 @@ import {
   NotFoundError,
   OrderStatus,
   requireAuth,
-} from "@ak-tickets-reuse/common";
+} from "@gittixteam/common";
 import { OrderCancelledPublisher } from "src/events/publishers/order-cancelled-publisher";
 
 const router = express.Router();
