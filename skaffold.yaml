@@ -39,7 +39,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: YOUR_USERNAME/expiration
+    - image: kiptanuiboaz/expiration
       context: expiration
       docker:
         dockerfile: Dockerfile
