@@ -4,6 +4,7 @@ import { app } from "./app";
 import { natsWrapper } from "./nats-wrapper";
 import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
+import { ExpirationCompleteListener } from "./events/listeners/expiration-complete-listener";
 
 const start = async () => {
   //ensure env vars are provided by concerned containers
@@ -49,6 +50,7 @@ const start = async () => {
     //LISTEN FOR EVENTS EMMITED BY THE SUBJECTS THE TICKETS SERVICE IS SUBSCRIBED TO
     new OrderCreatedListener(natsWrapper.client).listen();
     new OrderCancelledListener(natsWrapper.client).listen();
+    new ExpirationCompleteListener(natsWrapper.client).listen();
 
     //initiate database connection
     await mongoose.connect(process.env.MONGO_URI);
