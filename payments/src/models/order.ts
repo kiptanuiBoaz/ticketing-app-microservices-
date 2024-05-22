@@ -1,4 +1,4 @@
-import { OrderStatus } from "@ak-tickets-reuse/common";
+import { OrderStatus } from "@gittixteam/common";
 import mongoose from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
