@@ -7,7 +7,7 @@ import {
     NotFoundError,
     NotAuthorizedError,
     OrderStatus,
-} from "@ak-tickets-reuse/common";
+} from "@gittixteam/common";
 import { Order } from "../models/order";
 import { stripe } from "../stripe";
 import { Payment } from "../models/payment";
