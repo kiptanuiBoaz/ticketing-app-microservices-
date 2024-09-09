@@ -1,5 +1,4 @@
 "use-client";
-
 import { useState } from "react";
 import useRequest from "../../hooks/useRequest";
 import Router from "next/router";
@@ -27,10 +26,12 @@ const NewTicket = () => {
     const onBlur = () => {
         const value = parseFloat(price);
 
+        //not a a number
         if (isNaN(value)) {
             return;
         }
 
+        //round off to the  neares 2dp
         setPrice(value.toFixed(2));
     };
     return (

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { natsWrapper } from "../../../nats-wrapper";
-import { OrderCancelledEvent, OrderStatus } from "@ak-tickets-reuse/common";
+import { OrderCancelledEvent, OrderStatus } from "@gittixteam/common";
 import { Message } from "node-nats-streaming";
 import { Order } from "../../../models/order";
 import { OrderCancelledListener } from "../order-cancelled-listener";

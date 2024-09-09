@@ -1,10 +1,11 @@
+import { OrderCreatedListener } from './../../tickets/src/events/listeners/order-created-listener';
+import { OrderCancelledListener } from './../../tickets/src/events/listeners/order-cancelled-listener';
 import mongoose from "mongoose";
 
 import { app } from "./app";
 import { natsWrapper } from "./nats-wrapper";
-import { OrderCreatedListener } from "./events/listeners/order-created-listener";
-import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
 import { ExpirationCompleteListener } from "./events/listeners/expiration-complete-listener";
+import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
 
 const start = async () => {
   //ensure env vars are provided by concerned containers
@@ -51,6 +52,7 @@ const start = async () => {
     new OrderCreatedListener(natsWrapper.client).listen();
     new OrderCancelledListener(natsWrapper.client).listen();
     new ExpirationCompleteListener(natsWrapper.client).listen();
+    new PaymentCreatedListener(natsWrapper.client).listen();
 
     //initiate database connection
     await mongoose.connect(process.env.MONGO_URI);

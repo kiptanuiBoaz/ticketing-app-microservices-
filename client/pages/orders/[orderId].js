@@ -4,7 +4,7 @@ import useRequest from "../../hooks/useRequest";
 import Router from "next/router";
 
 const OrderShow = ({ order, currentUser }) => {
-    const [timeLeft, setTimeLeft] = useState("");
+    const [timeLeft, setTimeLeft] = useState(0);
     const { doRequest, errors } = useRequest({
         url: "/api/payments",
         method: "post",
@@ -21,7 +21,8 @@ const OrderShow = ({ order, currentUser }) => {
             setTimeLeft(Math.round(milisecondsLeft / 1000));
         };
 
-        findTimeLeft();
+        findTimeLeft();//for the first time
+
         const timerId = setInterval(findTimeLeft, 1000);
 
         //clean up timer when we navigate away from the component/ rerender
@@ -39,7 +40,7 @@ const OrderShow = ({ order, currentUser }) => {
             Time left to pay: {timeLeft} seconds
             <StripeCheckout
                 token={({ id }) => doRequest({ token: id })} //pass token as props to do request to be merged with body
-                stripeKey="pk_test_51MICMDKoVZIFgcElpXl1LIVKmx4OsNRHtgouIV6HVhKG5uiBKEsw9iuPdC1pDaGgH4vX7ztRP1Tw4Q9LrAHYHaMV00tG1sQRUE"
+                stripeKey="pk_test_51NGke0L5e95ib4hZ3E9l9TV3NgxheqAgEf0lHzQzHgIr8JEqnhjLbCcuVX36DMczlY8xmHY7TuL2uNXXHdTirVtj00KclJQ58K"
                 amount={order.ticket.price * 100}
                 email={currentUser.email}
             />
