@@ -1,13 +1,15 @@
-import { OrderCreatedListener } from './../../tickets/src/events/listeners/order-created-listener';
-import { OrderCancelledListener } from './../../tickets/src/events/listeners/order-cancelled-listener';
 import mongoose from "mongoose";
 
 import { app } from "./app";
 import { natsWrapper } from "./nats-wrapper";
+import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
+import { TicketUpdateListener } from "./events/listeners/ticket-updated-listener";
 import { ExpirationCompleteListener } from "./events/listeners/expiration-complete-listener";
-import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
+import { PaymentCreatedListener } from "./events/listeners/payment-created-listener";
 
 const start = async () => {
+  console.log("starting....");
+
   //ensure env vars are provided by concerned containers
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defined");
@@ -48,9 +50,9 @@ const start = async () => {
     process.on("SIGINT", () => natsWrapper.client!.close());
     process.on("SIGTERM", () => natsWrapper.client!.close());
 
-    //LISTEN FOR EVENTS EMMITED BY THE SUBJECTS THE TICKETS SERVICE IS SUBSCRIBED TO
-    new OrderCreatedListener(natsWrapper.client).listen();
-    new OrderCancelledListener(natsWrapper.client).listen();
+    //listen for traffic published to the channels the service is subscribed to
+    new TicketCreatedListener(natsWrapper.client).listen();
+    new TicketUpdateListener(natsWrapper.client).listen();
     new ExpirationCompleteListener(natsWrapper.client).listen();
     new PaymentCreatedListener(natsWrapper.client).listen();
 

@@ -1,6 +1,5 @@
-
-import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 import { natsWrapper } from "./nats-wrapper";
+import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 
 const start = async () => {
   //ensure env vars are provided by concerned containers
@@ -36,12 +35,11 @@ const start = async () => {
     process.on("SIGINT", () => natsWrapper.client!.close());
     process.on("SIGTERM", () => natsWrapper.client!.close());
 
+    //listen for events
     new OrderCreatedListener(natsWrapper.client).listen();
   } catch (error) {
     console.error(error);
   }
-
-
 };
 
 start();
