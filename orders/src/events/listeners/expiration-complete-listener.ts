@@ -1,4 +1,4 @@
-import { OrderCancelledPublisher } from 'src/events/publishers/order-cancelled-publisher';
+import { OrderCancelledPublisher } from '../publishers/order-cancelled-publisher';
 import {
     Listener,
     ExpirationCompleteEvent,
@@ -6,7 +6,7 @@ import {
     OrderStatus,
 } from "@gittixteam/common";
 import { Message } from "node-nats-streaming";
-import { Order } from 'src/models/order';
+import { Order } from '../../models/order';
 import { queueGroupName } from './queue-group-name';
 
 export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent> {

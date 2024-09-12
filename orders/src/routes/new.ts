@@ -5,13 +5,13 @@ import {
   BadRequestError,
   OrderStatus,
   NotFoundError,
-} from "@ak-tickets-reuse/common";
+} from "@gittixteam/common";
 import { body } from "express-validator";
 import mongoose from "mongoose";
 import { Ticket } from "../models/ticket";
 import { Order } from "../models/order";
 import { natsWrapper } from "../nats-wrapper";
-import { OrderCreatedPublisher } from "src/events/publishers/order-created-publisher";
+import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";
 
 const router = express.Router();
 

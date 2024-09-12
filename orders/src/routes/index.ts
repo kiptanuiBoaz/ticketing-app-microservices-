@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { requireAuth } from "@ak-tickets-reuse/common";
+import { requireAuth } from "@gittixteam/common";
 import { Order } from "../models/order";
 
 const router = express.Router();

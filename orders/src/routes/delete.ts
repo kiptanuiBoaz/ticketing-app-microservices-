@@ -7,7 +7,7 @@ import {
   OrderStatus,
   requireAuth,
 } from "@gittixteam/common";
-import { OrderCancelledPublisher } from "src/events/publishers/order-cancelled-publisher";
+import { OrderCancelledPublisher } from "../events/publishers/order-cancelled-publisher";
 
 const router = express.Router();
 
